@@ -368,7 +368,7 @@ Now that your network is running, let's try to send a `CashbackTransaction` to o
 
 In the new terminal window, create the transaction object.
 ```bash
-cd hello-world # make sure to be in the root folder of the Cashback application.
+cd cashback # make sure to be in the root folder of the Cashback application.
 mkdir client # create the folder for the client-side scripts inside the cashback folder
 cd client # navigate into the client folder
 touch print_sendable_cashback.js # create the file that will hold the code to create the transaction object
