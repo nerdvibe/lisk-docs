@@ -102,18 +102,11 @@ docker exec -ti lisk_sdk_db psql -h localhost -U lisk -d postgres -c "CREATE DAT
 
 Create the file `index.js`, which will hold the logic to initialize and start the blockchain application.
 
-[source,bash]
-----
-touch index.js <1>
-----
-
-<1> create the index file
-
 == 2. Configure the application
 
 Next, let’s configure the application, to provide basic information about the application we are going to build.
 
-To do this, open the file `index.js` that was created with the command above, and insert the following code:
+To do this, open the file `index.js` that was created with the step before, and insert the following code:
 
 [source,js]
 ----
@@ -144,7 +137,6 @@ NOTE: See the complete file on Github: https://github.com/LiskHQ/lisk-sdk-exampl
 <5> create the application instance
 <6> the code block below starts the application and doesn't need to be changed
 
-
 On `line 2` we require the needed dependencies from the `lisk-sdk` package.
 The most important one is the `Application` class, which is used in `line 8` to create the application instance.
 The application instance is used to start the blockchain application at the bottom of `index.js`.
@@ -152,7 +144,7 @@ The application instance is used to start the blockchain application at the bott
 On `line 8` the application instance gets initialized.
 By passing the parameters for the xref:2.3.2@lisk-sdk::configuration.adoc#_the_genesis_block[genesis block] and the https://github.com/LiskHQ/lisk-sdk/blob/development/sdk/src/samples/config_devnet.json[configuration template], the application is configured with the most basic configurations to start the node.
 
-TIP: If you want to change any of the values for `configDevnet`, check out the xref:2.3.2@lisk-sdk::configuration.adoc#_list_of_configuration_options[full list of configurations] for Lisk SDK and overwrite them like described in <<_7_customize_the_default_configuration[step 7]
+TIP: If you want to change any of the values for `configDevnet`, check out the xref:2.3.2@lisk-sdk::configuration.adoc#_list_of_configuration_options[full list of configurations] for Lisk SDK and overwrite them like described in <<_7_customize_the_default_configuration,step 7>>
 
 After adding the code block above, you can save and close `index.js`.
 At this point, you already can start the node and the network, to verify that the setup was successful:
@@ -774,19 +766,18 @@ TIP: For more configuration options, check out the xref:2.3.2@lisk-sdk::configur
 const { Application, genesisBlockDevnet, configDevnet} = require('lisk-sdk'); <1>
 const CashbackTransaction = require('./cashback_transaction'); <2>
 
-configDevnet.app.label = 'cashback-blockchain-app';
-//configDevnet.components.storage.user = '<username>';
-//configDevnet.components.storage.password = 'password'; // replace password with the password for your database user
+configDevnet.app.label = 'cashback-blockchain-app'; <3>
+//configDevnet.components.storage.user = '<username>'; <4>
+//configDevnet.components.storage.password = 'password'; <5>
 
-configDevnet.modules.http_api.access.public = true; <>
-//configDevnet.modules.http_api.access.whitelist.push('1.2.3.4'); <>
+configDevnet.modules.http_api.access.public = true; <6>
+//configDevnet.modules.http_api.access.whitelist.push('1.2.3.4'); <7>
 
-const app = new Application(genesisBlockDevnet, configDevnet); // create the application instance
+const app = new Application(genesisBlockDevnet, configDevnet); <8>
 
-app.registerTransaction(CashbackTransaction); <>
+app.registerTransaction(CashbackTransaction); <9>
 
-// the code block below starts the application and doesn't need to be changed
-app
+app <10>
     .run()
     .then(() => app.logger.info('App started...'))
     .catch(error => {
@@ -816,14 +807,11 @@ You can do so, by passing a copy of the config object `configDevnet` with custom
 configDevnet.components.logger.fileLogLevel = "error"; <1>
 configDevnet.components.logger.consoleLogLevel = "none"; <2>
 ----
+
+<1> will only log errors and fatal errors in the log file
+<2> no logs will be shown in console
 ====
 
-<1>
-<2> // no logs will be shown in console
+As next step, you can use a wallet software like e.g. a customized https://lisk.io/hub[Lisk Hub], so that users can utlize the new transaction type.
 
-As next step, you can use a wallet software like e.g. a customized
-https://lisk.io/hub[Lisk Hub], so that users can utlize the new
-transaction type.
-
-See also section link:../interact-with-network.md[Interact with the
-network].
+See also section xref:interact-with-network.adoc[Interact with the network].
