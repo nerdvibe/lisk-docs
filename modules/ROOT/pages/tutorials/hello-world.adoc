@@ -244,17 +244,15 @@ To stop the blockchain process, press kbd:[CTRL+C].
 
 == 3. Create a new transaction type
 
-For the Hello World App, we want to create a xref:2.3.2@lisk-sdk::customize.adoc[custom transaction type] `HelloTransaction`: If an account has enough balance to process `HelloTransaction` transaction (fee is set to 1 LSK by default), the new ``hello'' property appears into this account’s asset field.
-So after sending a valid `{"type": 10, "senderId": "16313739661670634666L", ... "asset": { "hello": "world" } }` transaction, the sender’s account changes from e.g.: `{ address: "16313739661670634666L", ..., asset: null }`, to `{ "address": "16313739661670634666L", ..., "asset": {"hello": "world"}} }`.
+For the Hello World App, we want to create a xref:2.3.2@lisk-sdk::customize.adoc[custom transaction type] `HelloTransaction`: +
+If an account has enough balance to process `HelloTransaction` transaction (fee is set to 1 LSK by default), the new "hello" property appears into this account’s asset field.
+So after sending a valid `{"type": 10, "senderId": "16313739661670634666L", ... "asset": { "hello": "world" } }` transaction, the sender’s account changes from e.g.: +
+`{ address: "16313739661670634666L", ..., asset: null }`, to +
+ `{ "address": "16313739661670634666L", ..., "asset": {"hello": "world"}} }`.
 
-Now, let’s create a new file `hello_transaction.js`, which is defining the new transaction type `HelloTransaction`:
+Now, let’s define the new transaction type `HelloTransaction`.
 
-[source,bash]
-----
-touch hello_transaction.js
-----
-
-To do this, open the file `hello_transaction.js` that was created with the command above, and insert the following code:
+To do this, create and open the file `hello_transaction.js` and insert the following code:
 
 .Contents of hello_transaction.js
 [source,js]
