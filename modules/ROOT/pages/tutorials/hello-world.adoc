@@ -493,7 +493,7 @@ let tx =  new HelloTransaction({ <1>
 tx.sign('wagon stock borrow episode laundry kitten salute link globe zero feed marble');
 
 console.log(tx.stringify()); <5>
-process.exit(0);
+process.exit(0); <6>
 ----
 
 TIP: See the complete file on Github: https://github.com/LiskHQ/lisk-sdk-examples/blob/development/hello_world/client/print_sendable_hello-world.js[hello_world/client/print_sendable_hello-world.js].
