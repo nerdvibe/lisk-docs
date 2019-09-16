@@ -1,6 +1,6 @@
 name: lisk-start
 title: Lisk Getting Started
 version: '1.2.0'
-start_page: ROOT:start.adoc
+start_page: ROOT:index.adoc
 nav:
 - modules/ROOT/nav.adoc
