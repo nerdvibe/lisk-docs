@@ -106,9 +106,9 @@ Next, let’s configure the application, to provide basic information about the 
 
 To do this, open the file `index.js` that was created with the step before, and insert the following code:
 
+.Contents of index.js
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet } = require('lisk-sdk'); <1>
 
 configDevnet.app.label = 'hello-world-blockchain-app'; <2>
@@ -130,16 +130,16 @@ TIP: See the complete file on Github: https://github.com/LiskHQ/lisk-sdk-example
 
 <1> Require application class, the default genesis block and the default config for the application
 We require the needed dependencies from the `lisk-sdk` package.
-The most important one is the `Application` class, which is used in `line 8` to create the application instance.
+The most important one is the `Application` class, which is used in <5> to create the application instance.
 The application instance will start the whole application at the bottom of `index.js`.
 <2> Set the name of your blockchain application
 <3> In case you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
 <4> Uncomment this and replace `password` with the password for your database user
 <5> Create the application instance
-By passing the parameters for the xref:2.3.2@lisk-sdk::configuration.adoc#the-genesis-block[genesis block] and the https://github.com/LiskHQ/lisk-sdk/blob/development/sdk/src/samples/config_devnet.json[configuration template], the application is configured with most basic configurations to start the node.
+By passing the parameters for the xref:2.3.2@lisk-sdk::configuration.adoc#the-genesis-block[genesis block] and the https://github.com/LiskHQ/lisk-sdk/blob/development/sdk/src/samples/config_devnet.json[configuration template], the application is configured with most basic configurations to start the network.
 <6> The code block below starts the application and doesn't need to be changed
 
-TIP: If you want to change any of the values for `configDevnet`, check out the xref:2.3.2@lisk-sdk::configuration.adoc#list-of-configuration-options[full list of configurations] for Lisk SDK and overwrite them like described in link:#7-customize-the-default-configuration[step 7]
+TIP: If you want to change any of the values for `configDevnet`, check out the xref:2.3.2@lisk-sdk::configuration.adoc#_list_of_configuration_options[full list of configurations] for Lisk SDK and overwrite them like described in <<_7_customize_the_default_configuration,step 7>>
 
 After adding the code block above, you can save and close `index.js`.
 At this point, you already can start the node and the network, to verify that the setup was successful:
@@ -149,7 +149,8 @@ At this point, you already can start the node and the network, to verify that th
 node index.js | npx bunyan -o short
 ----
 
-`node index.js` will start the node, and `| npx bunyan -o short` will pretty-print the logs in the console.
+`node index.js` will start the node, and +
+`| npx bunyan -o short` will pretty-print the logs in the console.
 
 If everything is ok, the following logs will be displayed:
 
@@ -248,7 +249,7 @@ For the Hello World App, we want to create a xref:2.3.2@lisk-sdk::customize.adoc
 If an account has enough balance to process `HelloTransaction` transaction (fee is set to 1 LSK by default), the new "hello" property appears into this account’s asset field.
 So after sending a valid `{"type": 10, "senderId": "16313739661670634666L", ... "asset": { "hello": "world" } }` transaction, the sender’s account changes from e.g.: +
 `{ address: "16313739661670634666L", ..., asset: null }`, to +
- `{ "address": "16313739661670634666L", ..., "asset": {"hello": "world"}} }`.
+`{ "address": "16313739661670634666L", ..., "asset": {"hello": "world"}} }`.
 
 Now, let’s define the new transaction type `HelloTransaction`.
 
@@ -257,7 +258,6 @@ To do this, create and open the file `hello_transaction.js` and insert the follo
 .Contents of hello_transaction.js
 [source,js]
 ----
-//hello_transaction.js
 const {
     transactions: { BaseTransaction },
     TransactionError,
@@ -374,9 +374,9 @@ Add the new transaction type to your application, by registering it to the appli
 
 NOTE: You only need to add 2 new lines (number <2> and <7>) to your existing `index.js`, to register the new transaction type.
 
+.Contents of index.js
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet} = require('lisk-sdk'); <1>
 const HelloTransaction = require('./hello_transaction'); <2>
 
@@ -398,14 +398,14 @@ app <8>
 
 TIP: See the file on Github: https://github.com/LiskHQ/lisk-sdk-examples/tree/development/hello_world/index.js[hello_world/index.js].
 
-<1> require application class, the default genesis block and the default config for the application
-<2> require the newly created transaction type 'HelloTransaction'
-<3> change the label of the app
+<1> Require application class, the default genesis block and the default config for the application
+<2> *New line*: Require the newly created transaction type 'HelloTransaction'
+<3> Change the label of the app
 <4> If you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
-<5> replace password with the password for your database user
-<6> create the application instance
-<7> register the 'HelloTransaction'
-<8> the code block below starts the application and doesn't need to be changed
+<5> Replace password with the password for your database user
+<6> Create the application instance
+<7> *New line*: Register the 'HelloTransaction'
+<8> The code block below starts the application and doesn't need to be changed
 
 After adding the 2 new lines to your `index.js` file, save and close it.
 
@@ -467,7 +467,6 @@ Open the file `print_sendable_hello-world.js` that was created with the command 
 .Contents of client/print_sendable_hello-world.js
 [source,js]
 ----
-//client/print_sendable_hello-world.js
 const HelloTransaction = require('../hello_transaction');
 const transactions = require('@liskhq/lisk-transactions');
 const { EPOCH_TIME } = require('@liskhq/lisk-constants');
@@ -512,6 +511,7 @@ node print_sendable_hello-world.js | python -m json.tool
 
 The generated transaction object should look like this:
 
+.Signed Transaction object
 [source,json]
 ----
 {
@@ -563,6 +563,7 @@ IMPORTANT: Use as `id` the id of your transaction object, that is posted to the 
 curl -X GET "http://localhost:4000/api/transactions?id=16130949532827670455" | python -m json.tool
 ----
 
+.Example Response of api/transactions endpoint, displays details of the HelloTransaction
 [source,json]
 ----
 {
@@ -603,6 +604,7 @@ Check, that the `hello` property got included into the account:
 curl -X GET "http://localhost:4000/api/accounts?address=16313739661670634666L" | python -m json.tool
 ----
 
+.Response of api/accounts, displays the `hello:world` property inside the senders' acount
 [source,json]
 ----
 {
@@ -666,7 +668,6 @@ TIP: For more configuration options, check out the xref:2.3.2@lisk-sdk::configur
 
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet} = require('lisk-sdk'); <1>
 const HelloTransaction = require('./hello_transaction'); <2>
 

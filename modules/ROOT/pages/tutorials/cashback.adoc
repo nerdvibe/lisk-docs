@@ -108,9 +108,9 @@ Next, let’s configure the application, to provide basic information about the 
 
 To do this, open the file `index.js` that was created with the step before, and insert the following code:
 
+.Contents of index.js
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet } = require('lisk-sdk'); <1>
 
 configDevnet.app.label = 'cashback-blockchain-app'; <2>
@@ -130,19 +130,16 @@ app <6>
 
 NOTE: See the complete file on Github: https://github.com/LiskHQ/lisk-sdk-examples/tree/development/cashback/index.js[cashback/index.js].
 
-<1> require application class, the default genesis block and the default config for the application
-<2> set the name of your blockchain application
-<3> In case you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
-<4> Uncomment this and replace `password` with the password for your database user
-<5> create the application instance
-<6> the code block below starts the application and doesn't need to be changed
-
-On `line 2` we require the needed dependencies from the `lisk-sdk` package.
-The most important one is the `Application` class, which is used in `line 8` to create the application instance.
-The application instance is used to start the blockchain application at the bottom of `index.js`.
-
-On `line 8` the application instance gets initialized.
-By passing the parameters for the xref:2.3.2@lisk-sdk::configuration.adoc#_the_genesis_block[genesis block] and the https://github.com/LiskHQ/lisk-sdk/blob/development/sdk/src/samples/config_devnet.json[configuration template], the application is configured with the most basic configurations to start the node.
+<1> Require application class, the default genesis block and the default config for the application.
+We require the needed dependencies from the `lisk-sdk` package.
+The most important one is the `Application` class, which is used in <5> to create the application instance.
+The application instance will start the whole application at the bottom of `index.js`.
+<2> Set the name of your blockchain application.
+<3> In case you gave a different user than 'lisk' access to the database `lisk_dev`, you need to update the username in the config.
+<4> Uncomment this and replace `password` with the password for your database user.
+<5> The application instance is created.
+By passing the parameters for the xref:2.3.2@lisk-sdk::configuration.adoc#_the_genesis_block[genesis block] and the https://github.com/LiskHQ/lisk-sdk/blob/development/sdk/src/samples/config_devnet.json[configuration template], the application is configured with the most basic configurations to start the network.
+<6> The code block below starts the application and doesn't need to be changed.
 
 TIP: If you want to change any of the values for `configDevnet`, check out the xref:2.3.2@lisk-sdk::configuration.adoc#_list_of_configuration_options[full list of configurations] for Lisk SDK and overwrite them like described in <<_7_customize_the_default_configuration,step 7>>
 
@@ -249,7 +246,7 @@ To stop the blockchain process, press kdb:[Ctrl+C].
 
 == 3. Create a new transaction type
 
-Now, we want to create a new link:../../lisk-sdk/customize.md[custom transaction type] `CashbackTransaction`:
+Now, we want to create a new xref:2.3.2@lisk-sdk::customize.md[custom transaction type] `CashbackTransaction`:
 It extends the pre-existing transaction type `TransferTransaction`.
 The difference between the regular `TransferTransaction` and the `CashbackTransaction`, is that Cashback transaction type also pays out a 10% bonus reward to its sender.
 
@@ -282,7 +279,6 @@ To do this, open the file `cashback_transaction.js` that was created with the co
 .Contents of cashback_transaction.js
 [source,js]
 ----
-//cashback_transaction.js
 const {
     transactions: { TransferTransaction },
     BigNum,
@@ -369,12 +365,11 @@ cashback
 
 Add the new transaction type to your application, by registering it to the application instance inside of `index.js`.
 
-NOTE: You only need to add 2 new lines (line 3 and 11) to your existing `index.js`, to register the new transaction type.
+NOTE: You only need to add 2 new lines (number <2> and <7>) to your existing `index.js`, to register the new transaction type.
 
 .Contents of index.js
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet} = require('lisk-sdk'); <1>
 const CashbackTransaction = require('./cashback_transaction'); <2>
 
@@ -397,14 +392,14 @@ app <8>
 
 TIP: See the file on Github: https://github.com/LiskHQ/lisk-sdk-examples/tree/development/cashback/index.js[cashback/index.js].
 
-<1> require application class, the default genesis block and the default config for the application
-<2> require the newly created transaction type 'CashbackTransaction'
-<3> change the label of the app
+<1> Require application class, the default genesis block and the default config for the application
+<2> *New line*: Require the newly created transaction type 'CashbackTransaction'
+<3> Change the label of the app
 <4> If you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
-<5> replace password with the password for your database user
-<6> create the application instance
-<7> register the 'CashbackTransaction'
-<8> the code block below starts the application and doesn't need to be changed
+<5> Replace password with the password for your database user
+<6> Create the application instance
+<7> *New line*: Register the 'CashbackTransaction'
+<8> The code block below starts the application and doesn't need to be changed
 
 After adding the 2 new lines to your `index.js` file, save and close it.
 
@@ -466,7 +461,6 @@ Open the file `print_sendable_cashback.js` that was created with the command abo
 .Content of client/print_sendable_cashback.js
 [source,js]
 ----
-//client/print_sendable_cashback.js
 const CashbackTransaction = require('../cashback_transaction');
 const transactions = require('@liskhq/lisk-transactions');
 const { EPOCH_TIME } = require('@liskhq/lisk-constants');
@@ -493,7 +487,9 @@ process.exit(0);
 
 TIP: See the complete file on Github: https://github.com/LiskHQ/lisk-sdk-examples/blob/development/cashback/client/print_sendable_cashback.js[cashback/client/print_sendable_cashback.js].
 
-This script will print the transaction in the console, when executed (Python’s json.tool is used to prettify the output):
+This script will print the transaction in the console, when executed.
+
+NOTE: Python’s `json.tool` is used to prettify the output
 
 [source,bash]
 ----
@@ -502,6 +498,7 @@ node print_sendable_cashback.js | python -m json.tool
 
 The generated transaction object should look like this:
 
+.Signed Transaction object
 [source,json]
 ----
 {
@@ -534,6 +531,7 @@ To check the account balance of the sender:
 curl -X GET "http://localhost:4000/api/accounts?address=16313739661670634666L" -H "accept: application/json" | python -m json.tool
 ----
 
+.Response from api/accounts endpoint with initial balance of the sender
 [source,json]
 ----
 {
@@ -560,6 +558,13 @@ Checking the account balance of the recipient:
 curl -X GET "http://localhost:4000/api/accounts?address=10881167371402274308L" -H "accept: application/json" | python -m json.tool
 ----
 
+[NOTE]
+====
+You might notice, the account data of `10881167371402274308L` contains more info than the account data of `16313739661670634666L`.
+This is simply because `10881167371402274308L` is a registered delegate, so additional information like the delegates name and the vote weight are stored in the accounts database entry.
+====
+
+.Response from api/accounts endpoint with initial balance of the recipient
 [source,json]
 ----
 {
@@ -589,10 +594,11 @@ curl -X GET "http://localhost:4000/api/accounts?address=10881167371402274308L" -
 }
 ----
 
-Because the API of every node is only accessible from localhost by default, you need to execute this query on the same server that your node is running on, unless you changed the config to <<_7_customize_the_default_configuration[make your API accessible] to others or to the public.
+Because the API of every node is only accessible from localhost by default, you need to execute this query on the same server that your node is running on, unless you changed the config to <<_7_customize_the_default_configuration,make your API accessible>> to others or to the public.
 
 IMPORTANT: Make sure your node is running, before sending the transaction
 
+.POST the transaction the local node
 [source,bash]
 ----
 node print_sendable_cashback.js | tee >(curl -X POST -H "Content-Type: application/json" -d @- localhost:4000/api/transactions) <1>
@@ -610,11 +616,13 @@ To verify that the transaction was included in a block:
 
 NOTE: Use as `id` the id of your transaction object, that is posted to the node in the previous step
 
+.Example Transaction API Request
 [source,bash]
 ----
 curl -X GET "http://localhost:4000/api/transactions?id=5372254888441494149" -H "accept: application/json" | python -m json.tool
 ----
 
+.Exmaple Response
 [source,json]
 ----
 {
@@ -646,13 +654,12 @@ curl -X GET "http://localhost:4000/api/transactions?id=5372254888441494149" -H "
 }
 ----
 
-
-
 ****
 In this example, the sender was sending 2 LSK to the recipient, and paid a transaction fee of 0.1 LSK. +
 At the same time, the sender gets a cashback of 10% of the transaction amount: 2 LSK * 10% = 0.2 LSK.
 
-As a result, the recipient should get a credit of 2 LSK, and *the sender s’ balance should be reduced by 1.9 LSK* (-2 LSK, plus a credit of 0.1 LSK [= 0.2 LSK (cashback) - 0.1 LSK (tx fee)]).
+As a result, the recipient should get a credit of 2 LSK, and *the sender s’ balance should be reduced by 1.9 LSK* +
+(-2 LSK, plus a credit of 0.1 LSK [= 0.2 LSK (cashback) - 0.1 LSK (tx fee)] = -1.9 LSK).
 ****
 
 NOTE: Note, that the balance of an account is stored in Beddows. 1 LSK = 100000000(= 10^8) Beddows.
@@ -664,6 +671,7 @@ Verify, that the sender account balance is reduced by 1.9 LSK:
 curl -X GET "http://localhost:4000/api/accounts?address=16313739661670634666L" -H "accept: application/json" | python -m json.tool
 ----
 
+.Response from api/accounts endpoint with updated senders' balance
 [source,json]
 ----
 {
@@ -690,6 +698,7 @@ Verify, that the recipient account got the credit of 2 LSK:
 curl -X GET "http://localhost:4000/api/accounts?address=10881167371402274308L" -H "accept: application/json" | python -m json.tool
 ----
 
+.Response from api/accounts endpoint with updated recipients' balance
 [source,json]
 ----
 {
@@ -762,7 +771,6 @@ TIP: For more configuration options, check out the xref:2.3.2@lisk-sdk::configur
 
 [source,js]
 ----
-//index.js
 const { Application, genesisBlockDevnet, configDevnet} = require('lisk-sdk'); <1>
 const CashbackTransaction = require('./cashback_transaction'); <2>
 
@@ -786,16 +794,16 @@ app <10>
     });
 ----
 
-<1> require application class, the default genesis block and the default config for the application
-<2> require the newly created transaction type 'CashbackTransaction'
-<3> set the name of your blockchain application
-<4> in case you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
-<5> uncomment this and replace `password` with the password for your database user
-<6> make the API accessible from everywhere
-<7> example how to make the API accessible for specific IP addresses: add 1.2.3.4 IP address as whitelisted
-<8> create the application instance
-<9> register the 'CashbackTransaction'
-<10> the code block below starts the application and doesn't need to be changed
+<1> Require application class, the default genesis block and the default config for the application
+<2> Require the newly created transaction type 'CashbackTransaction'
+<3> Set the name of your blockchain application
+<4> In case you gave a different user than 'lisk' access to the database lisk_dev, you need to update the username in the config
+<5> Uncomment this and replace `password` with the password for your database user
+<6> Make the API accessible from everywhere
+<7> Example how to make the API accessible for specific IP addresses: add 1.2.3.4 IP address as whitelisted
+<8> Create the application instance
+<9> Register the 'CashbackTransaction'
+<10> The code block below starts the application and doesn't need to be changed
 
 [NOTE]
 ====

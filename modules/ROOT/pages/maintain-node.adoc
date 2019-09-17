@@ -23,6 +23,7 @@ If you fall under one of the following groups, we recommend you to set up your o
 == Why operate a node?
 
 There are several reasons why you would want to set up a node:
+
 - Have your xref:2.1.0@lisk-core::configuration.adoc#_api_access_control[private] entry point to communicate with the network.
 It’s especially important if you are an exchange implementing LSK tokens.
 - Full control to xref:2.1.0@lisk-core::configuration.adoc[configure] the node to your specific needs
