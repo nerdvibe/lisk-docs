@@ -75,28 +75,31 @@ The default database user and password are `lisk` and `password`, they can be bo
 
 Make sure to start with a fresh database.
 
-For the system-wide Postgres installation:
+[tabs]
+====
+Postgres system-wide::
++
+--
+For the *system-wide Postgres* installation:
 
 [source,bash]
 ----
-psql
+psql -c "DROP DATABASE lisk_dev"
+psql -c "CREATE DATABASE lisk_dev OWNER lisk"
 ----
-
-If you have installed xref:2.3.2@lisk-sdk::setup.adoc#option-a-postgres-with-docker[Postgres with Docker], you need to run the following command, to access Postgres:
-
-[source,bash]
-----
-docker exec --tty --interactive lisk_sdk_db psql -h localhost -U lisk -d postgres
-----
-
-After connecting to your Postgres shell, you can drop and recreate the database.
+--
+Postgres with Docker::
++
+--
+If you have installed xref:2.3.2@lisk-sdk::setup.adoc#_option_a_postgres_with_docker[Postgres with Docker], you need to run the following commands:
 
 [source,bash]
 ----
-DROP DATABASE lisk_dev;
-CREATE DATABASE lisk_dev OWNER lisk;
-\q
+docker exec -ti lisk_sdk_db psql -h localhost -U lisk -d postgres -c "DROP DATABASE lisk_dev"
+docker exec -ti lisk_sdk_db psql -h localhost -U lisk -d postgres -c "CREATE DATABASE lisk_dev OWNER lisk"
 ----
+--
+====
 
 Create the file `index.js`, which will hold the logic to initialize and start the blockchain application.
 
