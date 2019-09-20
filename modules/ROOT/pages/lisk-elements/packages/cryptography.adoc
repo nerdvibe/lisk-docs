@@ -1,4 +1,5 @@
-== Lisk Elements Cryptography
+= Lisk Elements Cryptography
+:toc: right
 
 The Lisk Elements cryptography module provides all the cryptographic
 functionality necessary when interacting with the Lisk ecosystem.
