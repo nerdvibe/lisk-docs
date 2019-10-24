@@ -1,0 +1,95 @@
+= Lisk Transport
+
+A decentralized supply chain tracking application.
+
+[plantuml]
+----
+actor Sender
+actor Recipient
+actor Carrier
+
+node initnode [
+Packet
+----
+Account
+  ....
+  ID
+
+----
+IoT
+....
+Lightsensor
+Raspberry Pi
+]
+
+
+node node [
+Packet
+----
+Account
+  ....
+  ID
+  Sender
+  Recipient
+  minTrust
+  Security
+  Postage
+
+----
+IoT
+....
+Lightsensor
+Raspberry Pi
+Secret passphrase
+]
+
+node node2 [
+Packet
+----
+Account
+  ....
+  ID
+  Sender
+  Recipient
+  Carrier
+  minTrust
+  Security
+  Postage
+
+----
+IoT
+....
+Lightsensor
+Raspberry Pi
+Secret passphrase
+]
+
+Sender -> initnode : Initialize the packet account
+initnode -> node : Register packet transaction
+node -> Carrier : gives packet to
+Carrier -> node2 : Start transport transaction
+node2 --> (Send Alarm!) : If packet gets manipulated
+node2 -> Recipient : Receives packet
+Recipient --> (Transport failed) : Recipient reports failed transport
+Recipient --> (Transport success) : Recipient reports successful transfer
+
+note bottom of (Send Alarm!)
+  staus: Alarm
+end note
+
+note bottom of (Transport failed)
+  staus: fail
+end note
+
+note bottom of (Transport success)
+  staus: success
+end note
+
+note bottom of node
+  staus: Pending
+end note
+
+note bottom of node2
+  staus: Ongoing
+end note
+----
