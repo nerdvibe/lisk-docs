@@ -2,7 +2,6 @@
 :toc: preamble
 :imagesdir: ../../assets/images
 :experimental:
-:v_core: master
 
 The goal of this part is to implement a simple application that tracks sensor measurements on the blockchain.
 That means, once the IoT application will be started, it will immediately send an `LightAlarmTransaction` to the network, whenever the sensor detects light.

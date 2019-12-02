@@ -2,7 +2,6 @@
 :toc: preamble
 :imagesdir: ../../assets/images
 :experimental:
-:v_core: master
 
 The goal of Part 2 is to implement a complete workflow of a very simple version of a supply chain tracking system.
 
